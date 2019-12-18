@@ -14,3 +14,4 @@ E:\DEV\Livraria API\src\ApplicationCore\obj\Debug\netcoreapp2.2\ApplicationCore.
 E:\DEV\Livraria API\src\ApplicationCore\obj\Debug\netcoreapp2.2\ApplicationCore.AssemblyInfo.cs
 E:\DEV\Livraria API\src\ApplicationCore\obj\Debug\netcoreapp2.2\ApplicationCore.dll
 E:\DEV\Livraria API\src\ApplicationCore\obj\Debug\netcoreapp2.2\ApplicationCore.pdb
+E:\DEV\Livraria API\src\ApplicationCore\obj\Debug\netcoreapp2.2\ApplicationCore.csprojAssemblyReference.cache

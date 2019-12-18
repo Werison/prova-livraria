@@ -8,17 +8,12 @@ namespace ApplicationCore.Interfaces
 {
     public interface ILivroService
     {
-        Task AddLivro(int id, int isbn, string nome, double preco, DateTime dataPublicacao, string ImagemCapa);
+        Task<Livro> AddLivro(Livro livro);
         Task Delete(int LivroID);
-        Task GetAll();
+        List<Livro> GetAll();
         Task Update(Livro livro);
+        Task<Livro> GetByID(int id);
     }
 }
-//public int LivroID { get; set; }
-//public int ISBN { get; set; }
-//public string Nome { get; set; }
-//public double Preco { get; set; }
-//public List<Autor> Autores { get; set; }
-//public DateTime DataPublicacao { get; set; }
-//public string ImagemCapa { get; set; }
+
     

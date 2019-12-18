@@ -1,5 +1,6 @@
 ﻿using ApplicationCore.Entities;
 using ApplicationCore.Interfaces;
+using Ardalis.GuardClauses;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -14,10 +15,12 @@ namespace ApplicationCore.Services
         {
             _livroRepository = livroRepository;
         }
-        public Task AddLivro(int id, int isbn, string nome, double preco, DateTime dataPublicacao, string ImagemCapa)
+        public async Task<Livro> AddLivro(Livro livro)
         {
-            return null;
-           // return _livroRepository.AddAsync(new Livro { Id = id, ISBN = isbn, Nome = nome, Preco = preco, DataPublicacao = dataPublicacao, ImagemCapa = ImagemCapa });
+            var novoLivro = _livroRepository.ListAllAsync();
+            Guard.Against.Null(novoLivro, nameof(novoLivro));
+
+            return await _livroRepository.AddAsync(livro);
         }
 
         public async Task Delete(int LivroID)
@@ -26,14 +29,28 @@ namespace ApplicationCore.Services
             await _livroRepository.DeleteAsync(livro);
         }
 
-        public async Task GetAll()
+        public List<Livro> GetAll()
         {
-            await _livroRepository.ListAllAsync();
+            return (List<Livro>)_livroRepository.ListAllAsync().Result;
         }
 
         public async Task Update(Livro livro)
         {
-            await _livroRepository.UpdateAsync(livro);
+            var entity = _livroRepository.GetByIdAsync(livro.Id);
+            (entity.Result as Livro).ISBN = livro.ISBN;
+            (entity.Result as Livro).Nome = livro.Nome;
+            (entity.Result as Livro).Autor = livro.Autor;
+            (entity.Result as Livro).Preco = livro.Preco;
+            (entity.Result as Livro).ImagemCapa = livro.ImagemCapa;
+
+            if (entity.IsCompletedSuccessfully )
+            {
+                await _livroRepository.UpdateAsync(entity.Result);
+            }
+        }
+        public async Task<Livro> GetByID(int id)
+        {
+            return await _livroRepository.GetByIdAsync(id);
         }
     }
 }

@@ -15,67 +15,53 @@ namespace API.Controllers
     public class LivroController : ControllerBase
     {
         private readonly IAsyncRepository<Livro> _livroRepository;
-        public LivroController(IAsyncRepository<Livro> livroRepository)
+        private readonly ILivroService _livroServce;
+
+        public LivroController(IAsyncRepository<Livro> livroRepository, ILivroService livroServce)
         {
             _livroRepository = livroRepository;
+            _livroServce = livroServce;
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public ActionResult<IEnumerable<Livro>> Get()
         {
-
-            var result = await _livroRepository.ListAllAsync();
-            return Ok(result);
+            return Ok(_livroServce.GetAll());
         }
 
         [HttpPost]
         public async Task Post([FromBody] LivroDTO livro)
         {
-            Livro oLivro = new Livro(livro.ISBN, livro.Nome, livro.Preco, livro.Autor, livro.DataPublicacao);
-            var retorno = await _livroRepository.AddAsync(oLivro);
-            Ok(retorno);
+            Ok(await _livroServce.AddLivro(new Livro(livro.ISBN, livro.Nome, livro.Preco, livro.Autor, livro.DataPublicacao)));
         }
 
-        // GET api/values/5
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
-            try
-            {
-                return Ok(await _livroRepository.GetByIdAsync(id));
-            }
-            catch (Exception ex)
-            {
-
-                return BadRequest(ex);
-            }
-
+            return Ok(await _livroServce.GetByID(id));
         }
 
-        // PUT api/values/5
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, [FromBody] LivroDTO livro)
         {
-            try
+            await _livroServce.Update(new Livro
             {
-                var entity = _livroRepository.GetByIdAsync(id);
-                Livro oLivro = new Livro(livro.ISBN, livro.Nome, livro.Preco, livro.Autor, livro.DataPublicacao);
-                await _livroRepository.UpdateAsync(oLivro);
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex);
-
-            }
-
+                Id = id,
+                Nome = livro.Nome,
+                ImagemCapa = livro.ImagemCapa,
+                Preco = livro.Preco,
+                Autor = livro.Autor,
+                ISBN = livro.ISBN,
+                DataPublicacao = livro.DataPublicacao
+            });
+            return Ok();
         }
 
-        // DELETE api/values/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-
+            await _livroServce.Delete(id);
+            return Ok();
         }
     }
 }
