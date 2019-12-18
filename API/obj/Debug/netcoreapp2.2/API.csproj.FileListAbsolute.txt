@@ -28,6 +28,7 @@ E:\DEV\Livraria API\src\API\bin\Debug\netcoreapp2.2\API.runtimeconfig.json
 E:\DEV\Livraria API\src\API\bin\Debug\netcoreapp2.2\API.runtimeconfig.dev.json
 E:\DEV\Livraria API\src\API\bin\Debug\netcoreapp2.2\API.dll
 E:\DEV\Livraria API\src\API\bin\Debug\netcoreapp2.2\API.pdb
+E:\DEV\Livraria API\src\API\bin\Debug\netcoreapp2.2\API.xml
 E:\DEV\Livraria API\src\API\bin\Debug\netcoreapp2.2\ApplicationCore.dll
 E:\DEV\Livraria API\src\API\bin\Debug\netcoreapp2.2\Infrastructure.dll
 E:\DEV\Livraria API\src\API\bin\Debug\netcoreapp2.2\ApplicationCore.pdb

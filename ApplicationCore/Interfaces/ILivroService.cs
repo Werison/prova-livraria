@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ApplicationCore.Entities;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,7 +11,7 @@ namespace ApplicationCore.Interfaces
         Task AddLivro(int id, int isbn, string nome, double preco, DateTime dataPublicacao, string ImagemCapa);
         Task Delete(int LivroID);
         Task GetAll();
-        Task Update();
+        Task Update(Livro livro);
     }
 }
 //public int LivroID { get; set; }

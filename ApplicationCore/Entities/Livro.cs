@@ -8,11 +8,20 @@ namespace ApplicationCore.Entities
 {
     public class Livro: BaseEntity
     {
+        public Livro()
+        {
+
+        }
         public Livro(int isbm, string nome, double preco, string autor, DateTime dataPublicacao )
         {
             Guard.Against.Zero(isbm, nameof(isbm));
             Guard.Against.NullOrEmpty(nome, nameof(nome));
             Guard.Against.NullOrEmpty(autor, nameof(autor));
+            ISBN = isbm;
+            Nome = nome;
+            Preco = preco;
+            Autor = autor;
+            DataPublicacao = dataPublicacao;
         }
         public int ISBN { get; set; }
         public string Nome { get; set; }

@@ -37,6 +37,7 @@ E:\DEV\Livraria API\src\Livraria.Tests\bin\Debug\netcoreapp2.2\API.dll
 E:\DEV\Livraria API\src\Livraria.Tests\bin\Debug\netcoreapp2.2\ApplicationCore.dll
 E:\DEV\Livraria API\src\Livraria.Tests\bin\Debug\netcoreapp2.2\Infrastructure.dll
 E:\DEV\Livraria API\src\Livraria.Tests\bin\Debug\netcoreapp2.2\API.pdb
+E:\DEV\Livraria API\src\Livraria.Tests\bin\Debug\netcoreapp2.2\API.xml
 E:\DEV\Livraria API\src\Livraria.Tests\bin\Debug\netcoreapp2.2\ApplicationCore.pdb
 E:\DEV\Livraria API\src\Livraria.Tests\bin\Debug\netcoreapp2.2\Infrastructure.pdb
 E:\DEV\Livraria API\src\Livraria.Tests\obj\Debug\netcoreapp2.2\Livraria.Tests.csprojAssemblyReference.cache

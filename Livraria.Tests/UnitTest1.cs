@@ -21,6 +21,13 @@ namespace Livraria.Tests
             new Livro(1, "Livro 1", 10, "", DateTime.Now);
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void DadoUmLivroSemPreencherOISBMDeveRetornarUmaExecao()
+        {
+            new Livro(0, "Livro 1", 10, "teste", DateTime.Now);
+        }
+
     }
 
   

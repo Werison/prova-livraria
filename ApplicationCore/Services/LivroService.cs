@@ -31,9 +31,9 @@ namespace ApplicationCore.Services
             await _livroRepository.ListAllAsync();
         }
 
-        public Task Update()
+        public async Task Update(Livro livro)
         {
-            throw new NotImplementedException();
+            await _livroRepository.UpdateAsync(livro);
         }
     }
 }
