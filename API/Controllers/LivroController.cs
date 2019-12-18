@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ApplicationCore.DTO;
 using ApplicationCore.Entities;
 using ApplicationCore.Interfaces;
 using Microsoft.AspNetCore.Http;
@@ -35,16 +36,15 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public async Task Post()
+        public async Task Post([FromBody] LivroDTO livro)
         {
             try
             {
-                Livro livro = new Livro();
                 livro.ISBN = 1;
                 livro.Nome = "O CRESCIMENTO E AS MUDANÇAS: O LIVRO DOS PORQUÊS";
                 livro.Preco = 54.00;
                 livro.DataPublicacao = new DateTime(1982, 01, 05);
-                livro.ImagemCapa = "https://livrariacultura.vteximg.com.br/arquivos/ids/15513906-475-475/2112174919.jpg?v=637105459930200000"; await _livroRepository.AddAsync(livro);
+                //livro.ImagemCapa = "https://livrariacultura.vteximg.com.br/arquivos/ids/15513906-475-475/2112174919.jpg?v=637105459930200000"; await _livroRepository.AddAsync(livro);
             }
             catch (Exception)
             {

@@ -16,7 +16,8 @@ namespace ApplicationCore.Services
         }
         public Task AddLivro(int id, int isbn, string nome, double preco, DateTime dataPublicacao, string ImagemCapa)
         {
-            return _livroRepository.AddAsync(new Livro { Id = id, ISBN = isbn, Nome = nome, Preco = preco, DataPublicacao = dataPublicacao, ImagemCapa = ImagemCapa });
+            return null;
+           // return _livroRepository.AddAsync(new Livro { Id = id, ISBN = isbn, Nome = nome, Preco = preco, DataPublicacao = dataPublicacao, ImagemCapa = ImagemCapa });
         }
 
         public async Task Delete(int LivroID)

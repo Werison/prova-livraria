@@ -2,6 +2,18 @@
   "version": 3,
   "targets": {
     ".NETCoreApp,Version=v2.2": {
+      "Ardalis.GuardClauses/1.3.1": {
+        "type": "package",
+        "dependencies": {
+          "NETStandard.Library": "1.6.1"
+        },
+        "compile": {
+          "lib/netstandard1.1/Ardalis.GuardClauses.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.1/Ardalis.GuardClauses.dll": {}
+        }
+      },
       "Microsoft.AspNet.WebApi.Client/5.2.6": {
         "type": "package",
         "dependencies": {
@@ -4883,6 +4895,9 @@
       "ApplicationCore/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v2.2",
+        "dependencies": {
+          "Ardalis.GuardClauses": "1.3.1"
+        },
         "compile": {
           "bin/placeholder/ApplicationCore.dll": {}
         },
@@ -4907,6 +4922,21 @@
     }
   },
   "libraries": {
+    "Ardalis.GuardClauses/1.3.1": {
+      "sha512": "he3qia7HcEupMG1WBcixrEL372i9iMUWcOfF/2BV9qu5wcJJ1sQgWJw1pHiZkFMDN8V4QnSL0US21y1l8HfvfA==",
+      "type": "package",
+      "path": "ardalis.guardclauses/1.3.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "ardalis.guardclauses.1.3.1.nupkg.sha512",
+        "ardalis.guardclauses.nuspec",
+        "lib/net40/Ardalis.GuardClauses.dll",
+        "lib/net40/Ardalis.GuardClauses.pdb",
+        "lib/netstandard1.1/Ardalis.GuardClauses.dll",
+        "lib/netstandard1.1/Ardalis.GuardClauses.pdb"
+      ]
+    },
     "Microsoft.AspNet.WebApi.Client/5.2.6": {
       "sha512": "owAlEIUZXWSnkK8Z1c+zR47A0X6ykF4XjbPok4lQKNuciUfHLGPd6QnI+rt/8KlQ17PmF+I4S3f+m+Qe4IvViw==",
       "type": "package",
