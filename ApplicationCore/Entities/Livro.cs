@@ -12,7 +12,7 @@ namespace ApplicationCore.Entities
         {
 
         }
-        public Livro(int isbm, string nome, double preco, string autor, DateTime dataPublicacao )
+        public Livro(int isbm, string nome, double preco, string autor, DateTime dataPublicacao, string imagemCapa)
         {
             Guard.Against.Zero(isbm, nameof(isbm));
             Guard.Against.NullOrEmpty(nome, nameof(nome));
@@ -22,6 +22,7 @@ namespace ApplicationCore.Entities
             Preco = preco;
             Autor = autor;
             DataPublicacao = dataPublicacao;
+            ImagemCapa = imagemCapa;
         }
         public int ISBN { get; set; }
         public string Nome { get; set; }

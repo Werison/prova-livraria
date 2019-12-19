@@ -12,20 +12,20 @@ namespace Livraria.Tests
         [ExpectedException(typeof(ArgumentException))]
         public void DadoUmLivrSemPreenchimentoDoNomeDeveRetornarUmaExcecao()
         {
-            new Livro(1, "", 10, "Paulo Coelho", DateTime.Now);
+            new Livro(1, "", 10, "Paulo Coelho", DateTime.Now, "Imagem");
         }
         [TestMethod]
         [ExpectedException(typeof (ArgumentException))]
         public void DadoUmLivroSemPreencherOAutorDeveRetornarUmaExecao()
         {
-            new Livro(1, "Livro 1", 10, "", DateTime.Now);
+            new Livro(1, "Livro 1", 10, "", DateTime.Now, "Imagem");
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void DadoUmLivroSemPreencherOISBMDeveRetornarUmaExecao()
         {
-            new Livro(0, "Livro 1", 10, "teste", DateTime.Now);
+            new Livro(0, "Livro 1", 10, "teste", DateTime.Now, "Imagem");
         }
 
     }

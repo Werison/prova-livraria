@@ -1,6 +1,7 @@
 ﻿using ApplicationCore.Entities;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,6 +15,7 @@ namespace ApplicationCore.Interfaces
         Task<T> AddAsync(T entity);
         Task UpdateAsync(T entity);
         Task DeleteAsync(T entity);
+        IEnumerable<T> FilterByCondition(Expression<Func<T, bool>> condition);
         //  Task<int> CountAsync(ISpecification<T> spec);
     }
 }

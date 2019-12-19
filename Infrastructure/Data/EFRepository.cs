@@ -3,12 +3,14 @@ using ApplicationCore.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Infrastructure.Data
 {
-    public class EFRepository<T>: IAsyncRepository<T> where T : BaseEntity
+    public class EFRepository<T> : IAsyncRepository<T> where T : BaseEntity
     {
         protected readonly LivrariaContext _dbContext;
         public EFRepository(LivrariaContext dbContext)
@@ -43,6 +45,10 @@ namespace Infrastructure.Data
         {
             _dbContext.Entry(entity).State = EntityState.Modified;
             await _dbContext.SaveChangesAsync();
+        }
+        public IEnumerable<T> FilterByCondition(Expression<Func<T, bool>> condition)
+        {
+            return _dbContext.Set<T>().Where(condition);
         }
     }
 }

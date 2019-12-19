@@ -1,8 +1,10 @@
-﻿using ApplicationCore.Entities;
+﻿using ApplicationCore.DTO;
+using ApplicationCore.Entities;
 using ApplicationCore.Interfaces;
 using Ardalis.GuardClauses;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,9 +19,12 @@ namespace ApplicationCore.Services
         }
         public async Task<Livro> AddLivro(Livro livro)
         {
-            var novoLivro = _livroRepository.ListAllAsync();
-            Guard.Against.Null(novoLivro, nameof(novoLivro));
+            var novoLivro = _livroRepository.FilterByCondition(x => x.ISBN == livro.ISBN).FirstOrDefault();
 
+            if (novoLivro != null)
+            {
+                throw new Exception("ISBN já existe!");
+            }
             return await _livroRepository.AddAsync(livro);
         }
 
@@ -51,6 +56,35 @@ namespace ApplicationCore.Services
         public async Task<Livro> GetByID(int id)
         {
             return await _livroRepository.GetByIdAsync(id);
+        }
+
+        public List<Livro> GetLivrosPorFiltro(LivroDTO filtro)
+        {
+            var query = _livroRepository.FilterByCondition(x=> x.Id > 0);
+            if (filtro.ISBN > 0 )
+            {
+                query = query.Where(x => x.ISBN == filtro.ISBN);
+            }
+
+            if (!string.IsNullOrEmpty(filtro.Nome))
+            {
+                query = query.Where(x => x.Nome.Contains(filtro.Nome));
+            }
+
+            if (!string.IsNullOrEmpty(filtro.Autor))
+            {
+                query = query.Where(x => x.Autor.Contains(filtro.Autor));
+            }
+            if (filtro.Preco > 0)
+            {
+                query = query.Where(x => x.Preco == filtro.Preco);
+            }
+            //if (filtro.DataPublicacao))
+            //{
+            //    query = query.Where(x => x.DataPublicacao == filtro.DataPublicacao));
+            //}
+
+            return query.ToList();
         }
     }
 }
