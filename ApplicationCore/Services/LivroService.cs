@@ -58,7 +58,7 @@ namespace ApplicationCore.Services
             return await _livroRepository.GetByIdAsync(id);
         }
 
-        public List<Livro> GetLivrosPorFiltro(LivroDTO filtro)
+        public List<Livro> GetLivrosPorFiltro(LivroFiltroDTO filtro)
         {
             var query = _livroRepository.FilterByCondition(x=> x.Id > 0);
             if (filtro.ISBN > 0 )
@@ -78,6 +78,27 @@ namespace ApplicationCore.Services
             if (filtro.Preco > 0)
             {
                 query = query.Where(x => x.Preco == filtro.Preco);
+            }
+           
+            if (filtro.SortBy.ToUpper() == "ISBN")
+            {
+                return query.OrderBy(o => o.ISBN).ToList();
+            }
+            else if (filtro.SortBy.ToUpper() == "NOME")
+            {
+                return query.OrderBy(o => o.Nome).ToList();
+            }
+            else if (filtro.SortBy.ToUpper() == "AUTOR")
+            {
+                return query.OrderBy(o => o.Autor).ToList();
+            }
+            else if (filtro.SortBy.ToUpper() == "PRECO")
+            {
+                return query.OrderBy(o => o.Preco).ToList();
+            }
+            else if (filtro.SortBy.ToUpper() == "DATAPUBLICACAO")
+            {
+                return query.OrderBy(o => o.DataPublicacao).ToList();
             }
             //if (filtro.DataPublicacao))
             //{

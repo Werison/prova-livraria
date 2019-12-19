@@ -25,40 +25,40 @@ namespace API.Controllers
             _livroService = livroServce;
         }
 
-        //[HttpGet]
-        //public ActionResult<IEnumerable<Livro>> Get()
-        //{
-        //    try
-        //    {
-        //        return Ok(_livroService.GetAll());
-        //    }
-        //    catch (Exception)
-        //    {
-        //        BadRequest();
-        //    }
-        //    return Ok();
-        //}
-
-        //[HttpPost]
-        //public async Task Post([FromBody] LivroDTO livro, FormFile imagemLivro)
-        //{
-        //    try
-        //    {
-        //        Ok(await _livroService.AddLivro(new Livro(livro.ISBN, livro.Nome, livro.Preco, livro.Autor, livro.DataPublicacao, livro.ImagemCapa)));
-        //    }
-        //    catch (Exception)
-        //    {
-        //        BadRequest();
-        //    }
-
-        //}
-
-        [HttpPost]
-        public  ActionResult<IEnumerable<Livro>> PostByFilter([FromBody] LivroDTO filtro)
+        [HttpGet]
+        public ActionResult<IEnumerable<Livro>> Get()
         {
             try
             {
-                var result = _livroService.GetLivrosPorFiltro(filtro);
+                return Ok(_livroService.GetAll());
+            }
+            catch (Exception ex)
+            {
+                BadRequest();
+            }
+            return Ok();
+        }
+
+        [HttpPost]
+        public async Task Post([FromBody] LivroDTO livro, FormFile imagemLivro)
+        {
+            try
+            {
+                Ok(await _livroService.AddLivro(new Livro(livro.ISBN, livro.Nome, livro.Preco, livro.Autor, livro.DataPublicacao, livro.ImagemCapa)));
+            }
+            catch (Exception)
+            {
+                BadRequest();
+            }
+
+        }
+
+        [HttpPost("LivrosComFiltro")]
+        public  ActionResult<IEnumerable<Livro>> PostByFilter([FromBody] LivroFiltroDTO filtro)
+        {
+            try
+            {
+              var result = _livroService.GetLivrosPorFiltro(filtro);
                 return Ok(result);
             }
             catch (Exception)
@@ -66,7 +66,7 @@ namespace API.Controllers
 
                 BadRequest();
             }
-            return Ok();
+            return Ok("A Busca não retornou resultados.");
         }
 
         [HttpGet("{id}")]
@@ -74,8 +74,8 @@ namespace API.Controllers
         {
             try
             {
-                await _livroService.GetByID(id);
-                return Ok();
+                var result = await _livroService.GetByID(id);
+                return Ok(result);
             }
             catch (Exception)
             {
@@ -104,7 +104,6 @@ namespace API.Controllers
             }
             catch (Exception ex)
             {
-
                 BadRequest();
             }
 

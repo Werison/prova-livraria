@@ -14,7 +14,7 @@ namespace ApplicationCore.Interfaces
         List<Livro> GetAll();
         Task Update(Livro livro);
         Task<Livro> GetByID(int id);
-        List<Livro> GetLivrosPorFiltro(LivroDTO filtro);
+        List<Livro> GetLivrosPorFiltro(LivroFiltroDTO filtro);
     }
 }
 

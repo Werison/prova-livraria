@@ -90,6 +90,8 @@ namespace API
 
             });
 
+            app.UseHttpsRedirection();
+            app.UseHsts();
 
 
         }
