@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http.Internal;
+using System.IO;
+using System.Net.Http.Headers;
 
 namespace API.Controllers
 {
@@ -34,39 +36,37 @@ namespace API.Controllers
             }
             catch (Exception ex)
             {
-                BadRequest();
+                return BadRequest(ex);
             }
-            return Ok();
         }
 
         [HttpPost]
-        public async Task Post([FromBody] LivroDTO livro, FormFile imagemLivro)
+        public async Task<IActionResult> Post([FromBody] LivroDTO livro)
         {
             try
             {
-                Ok(await _livroService.AddLivro(new Livro(livro.ISBN, livro.Nome, livro.Preco, livro.Autor, livro.DataPublicacao, livro.ImagemCapa)));
+                return Ok(await _livroService.AddLivro(new Livro(livro.ISBN, livro.Nome, livro.Preco, livro.Autor, livro.DataPublicacao, livro.ImagemCapa)));
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                BadRequest();
+                return BadRequest(ex);
             }
 
         }
 
         [HttpPost("LivrosComFiltro")]
-        public  ActionResult<IEnumerable<Livro>> PostByFilter([FromBody] LivroFiltroDTO filtro)
+        public ActionResult<IEnumerable<Livro>> PostByFilter([FromBody] LivroFiltroDTO filtro)
         {
             try
             {
-              var result = _livroService.GetLivrosPorFiltro(filtro);
+                var result = _livroService.GetLivrosPorFiltro(filtro);
                 return Ok(result);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                BadRequest();
+                return BadRequest(ex);
             }
-            return Ok("A Busca não retornou resultados.");
+          
         }
 
         [HttpGet("{id}")]
@@ -77,13 +77,10 @@ namespace API.Controllers
                 var result = await _livroService.GetByID(id);
                 return Ok(result);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                BadRequest();
+                return BadRequest(ex);
             }
-           
-           return Ok();
         }
 
         [HttpPut("{id}")]
@@ -104,7 +101,7 @@ namespace API.Controllers
             }
             catch (Exception ex)
             {
-                BadRequest();
+                return BadRequest(ex);
             }
 
             return Ok();
@@ -117,11 +114,41 @@ namespace API.Controllers
             {
                 await _livroService.Delete(id);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                BadRequest();
+                return BadRequest(ex);
             }
             return Ok();
+        }
+
+        [HttpPost("upload")]
+        public async Task<IActionResult> Upload()
+        {
+            try
+            {
+                var file = Request.Form.Files[0];
+                var folderName = Path.Combine("Resources", "Images");
+                var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+
+                if (file.Length > 0)
+                {
+                    var filename = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName;
+                    var fullPath = Path.Combine(pathToSave, filename.Replace("\"", " ").Trim());
+
+                    using (var stream = new FileStream(fullPath, FileMode.Create))
+                    {
+                        file.CopyTo(stream);
+                    }
+                }
+
+                return Ok();
+            }
+            catch (System.Exception ex)
+            {
+                return this.StatusCode(StatusCodes.Status500InternalServerError, $"Banco Dados Falhou {ex.Message}");
+            }
+
+         //   return BadRequest("Erro ao tentar realizar upload");
         }
     }
 }

@@ -12,7 +12,7 @@ namespace ApplicationCore.Interfaces
         Task<Livro> AddLivro(Livro livro);
         Task Delete(int LivroID);
         List<Livro> GetAll();
-        Task Update(Livro livro);
+        Task<Livro> Update(Livro livro);
         Task<Livro> GetByID(int id);
         List<Livro> GetLivrosPorFiltro(LivroFiltroDTO filtro);
     }

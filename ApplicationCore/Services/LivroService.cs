@@ -30,8 +30,17 @@ namespace ApplicationCore.Services
 
         public async Task Delete(int LivroID)
         {
-            var livro = await _livroRepository.GetByIdAsync(LivroID);
-            await _livroRepository.DeleteAsync(livro);
+            try
+            {
+                var livro = await _livroRepository.GetByIdAsync(LivroID);
+                await _livroRepository.DeleteAsync(livro);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+          
         }
 
         public List<Livro> GetAll()
@@ -39,20 +48,50 @@ namespace ApplicationCore.Services
             return (List<Livro>)_livroRepository.ListAllAsync().Result;
         }
 
-        public async Task Update(Livro livro)
+        public async Task<Livro> Update(Livro livro)
         {
             var entity = _livroRepository.GetByIdAsync(livro.Id);
-            (entity.Result as Livro).ISBN = livro.ISBN;
-            (entity.Result as Livro).Nome = livro.Nome;
-            (entity.Result as Livro).Autor = livro.Autor;
-            (entity.Result as Livro).Preco = livro.Preco;
-            (entity.Result as Livro).ImagemCapa = livro.ImagemCapa;
 
-            if (entity.IsCompletedSuccessfully )
+            if (livro.ISBN > 0)
+            {
+                var livroExistente = _livroRepository.FilterByCondition(x => x.ISBN == livro.ISBN).FirstOrDefault();
+
+                if (livroExistente != null)
+                {
+                    throw new Exception("ISBN já existe!");
+                }
+
+                (entity.Result as Livro).ISBN = livro.ISBN;
+            }
+
+            if (!String.IsNullOrEmpty(livro.Nome))
+            {
+                (entity.Result as Livro).Nome = livro.Nome;
+            }
+
+            if (!String.IsNullOrEmpty(livro.Autor))
+            {
+                (entity.Result as Livro).Autor = livro.Autor;
+            }
+
+            if (livro.Preco > 0)
+            {
+                (entity.Result as Livro).Preco = livro.Preco;
+            }
+
+            if (!String.IsNullOrEmpty(livro.ImagemCapa))
+            {
+                (entity.Result as Livro).ImagemCapa = livro.ImagemCapa;
+            }
+
+            if (entity.IsCompletedSuccessfully)
             {
                 await _livroRepository.UpdateAsync(entity.Result);
+                
             }
+            return entity.Result;
         }
+
         public async Task<Livro> GetByID(int id)
         {
             return await _livroRepository.GetByIdAsync(id);
@@ -60,8 +99,8 @@ namespace ApplicationCore.Services
 
         public List<Livro> GetLivrosPorFiltro(LivroFiltroDTO filtro)
         {
-            var query = _livroRepository.FilterByCondition(x=> x.Id > 0);
-            if (filtro.ISBN > 0 )
+            var query = _livroRepository.FilterByCondition(x => x.Id > 0);
+            if (filtro.ISBN > 0)
             {
                 query = query.Where(x => x.ISBN == filtro.ISBN);
             }
@@ -79,31 +118,28 @@ namespace ApplicationCore.Services
             {
                 query = query.Where(x => x.Preco == filtro.Preco);
             }
-           
-            if (filtro.SortBy.ToUpper() == "ISBN")
+
+            if (filtro.SortBy != null && filtro.SortBy.ToUpper() == "ISBN")
             {
                 return query.OrderBy(o => o.ISBN).ToList();
             }
-            else if (filtro.SortBy.ToUpper() == "NOME")
+            else if (filtro.SortBy != null && filtro.SortBy.ToUpper() == "NOME")
             {
                 return query.OrderBy(o => o.Nome).ToList();
             }
-            else if (filtro.SortBy.ToUpper() == "AUTOR")
+            else if (filtro.SortBy != null && filtro.SortBy.ToUpper() == "AUTOR")
             {
                 return query.OrderBy(o => o.Autor).ToList();
             }
-            else if (filtro.SortBy.ToUpper() == "PRECO")
+            else if (filtro.SortBy != null && filtro.SortBy.ToUpper() == "PRECO")
             {
                 return query.OrderBy(o => o.Preco).ToList();
             }
-            else if (filtro.SortBy.ToUpper() == "DATAPUBLICACAO")
+            else if (filtro.SortBy != null && filtro.SortBy.ToUpper() == "DATAPUBLICACAO")
             {
                 return query.OrderBy(o => o.DataPublicacao).ToList();
             }
-            //if (filtro.DataPublicacao))
-            //{
-            //    query = query.Where(x => x.DataPublicacao == filtro.DataPublicacao));
-            //}
+            
 
             return query.ToList();
         }

@@ -44,7 +44,7 @@ namespace API
                 {
                     Version = "v1",
                     Title = "Livraria API",
-                    Description = "A simple example ASP.NET Core Web API",
+                    Description = "Web API Livraria - Prova",
                     TermsOfService = new Uri("https://example.com/terms"),
                     Contact = new OpenApiContact
                     {

@@ -46,3 +46,4 @@ E:\DEV\Livraria API\src\Livraria.Tests\obj\Debug\netcoreapp2.2\Livraria.Tests.As
 E:\DEV\Livraria API\src\Livraria.Tests\obj\Debug\netcoreapp2.2\Livraria.Tests.csproj.CopyComplete
 E:\DEV\Livraria API\src\Livraria.Tests\obj\Debug\netcoreapp2.2\Livraria.Tests.dll
 E:\DEV\Livraria API\src\Livraria.Tests\obj\Debug\netcoreapp2.2\Livraria.Tests.pdb
+E:\DEV\Livraria API\src\Livraria.Tests\bin\Debug\netcoreapp2.2\LIVRARIA.db
